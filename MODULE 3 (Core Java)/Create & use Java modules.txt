@@ -1,0 +1,42 @@
+1. Define com.utils Module
+module com.utils {
+    exports com.utils;
+}
+
+package com.utils;
+
+public class Utils {
+    public static String getMessage() {
+        return "Hello from com.utils!";
+    }
+}
+
+2. Define com.greetings Module
+module com.greetings {
+    requires com.utils;
+}
+
+package com.greetings;
+
+import com.utils.Utils;
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Main says: " + Utils.getMessage());
+    }
+}
+
+3. Compile the Modules
+# Compile com.utils
+javac -d out/com.utils \
+    com.utils/module-info.java com/utils/Utils.java
+
+# Compile com.greetings (requires com.utils)
+javac --module-path out -d out/com.greetings \
+    com.greetings/module-info.java com/greetings/Main.java
+
+4. Run the Program
+java --module-path out -m com.greetings/com.greetings.Main
+
+
+

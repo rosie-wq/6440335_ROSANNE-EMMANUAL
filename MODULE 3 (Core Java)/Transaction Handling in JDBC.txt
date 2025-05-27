@@ -1,0 +1,69 @@
+1. SQL Setup
+CREATE TABLE accounts (
+    id INT PRIMARY KEY,
+    balance DECIMAL(15, 2)
+);
+INSERT INTO accounts (id, balance) VALUES
+(1, 1000.00),
+(2, 500.00);
+
+2. Java Code for Transaction Handling
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class AccountDAO {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/bank"; 
+    private static final String USER = "root";       
+    private static final String PASSWORD = "password";
+
+    private Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    public void transfer(int fromAccountId, int toAccountId, double amount) {
+        String debitSQL = "UPDATE accounts SET balance = balance - ? WHERE id = ? AND balance >= ?";
+        String creditSQL = "UPDATE accounts SET balance = balance + ? WHERE id = ?";
+
+        try (Connection conn = getConnection()) {
+            conn.setAutoCommit(false); 
+
+            try (PreparedStatement debitStmt = conn.prepareStatement(debitSQL);
+                 PreparedStatement creditStmt = conn.prepareStatement(creditSQL)) {
+
+                debitStmt.setDouble(1, amount);
+                debitStmt.setInt(2, fromAccountId);
+                debitStmt.setDouble(3, amount);
+                int debitCount = debitStmt.executeUpdate();
+
+                if (debitCount != 1) {
+                    throw new SQLException("Insufficient balance or account not found for debit.");
+                }
+                creditStmt.setDouble(1, amount);
+                creditStmt.setInt(2, toAccountId);
+                int creditCount = creditStmt.executeUpdate();
+
+                if (creditCount != 1) {
+                    throw new SQLException("Destination account not found for credit.");
+                }
+
+                conn.commit();
+                System.out.println("Transfer successful!");
+
+            } catch (SQLException e) {
+                conn.rollback(); 
+                System.out.println("Transfer failed, transaction rolled back.");
+                e.printStackTrace();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        AccountDAO dao = new AccountDAO();
+        dao.transfer(1, 2, 200.00);
+    }
+}
