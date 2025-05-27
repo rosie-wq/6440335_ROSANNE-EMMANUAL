@@ -1,0 +1,172 @@
+<!-- Task 1: HTML5 Base Template -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community Event Portal</title>
+  <style>
+    #welcomeBanner { background-color: blue; color: white; padding: 10px; }
+    .highlight { font-weight: bold; color: green; }
+    .event-img { border: 2px solid #ccc; width: 100px; height: auto; }
+    form { margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<!-- Task 2: Navigation -->
+<nav>
+  <a href="#home">Home</a> |
+  <a href="#events">Events</a> |
+  <a href="#contact">Contact</a> |
+  <a href="help.html" target="_blank">Help</a>
+</nav>
+
+<!-- Task 3: Welcome Banner -->
+<div id="welcomeBanner">
+  Welcome, User! <span style="color: red; font-weight: bold;">Special Offer!</span>
+  <p class="highlight">Don't miss upcoming events.</p>
+</div>
+
+<!-- Task 4: Image Gallery -->
+<section id="events">
+  <h2>Event Gallery</h2>
+  <table>
+    <caption>Previous Community Events</caption>
+    <tr>
+      <td><img src="event1.jpg" alt="Event 1" title="Music Night" class="event-img"></td>
+      <td><img src="event2.jpg" alt="Event 2" title="Food Fest" class="event-img"></td>
+      <td><img src="event3.jpg" alt="Event 3" title="Art Fair" class="event-img"></td>
+    </tr>
+    <tr>
+      <td><img src="event4.jpg" alt="Event 4" title="Tech Meetup" class="event-img"></td>
+      <td><img src="event5.jpg" alt="Event 5" title="Charity Run" class="event-img"></td>
+      <td><img src="event6.jpg" alt="Event 6" title="Book Club" class="event-img"></td>
+    </tr>
+  </table>
+</section>
+
+<!-- Task 5: Registration Form -->
+<section id="register">
+  <h2>Event Registration</h2>
+  <form id="regForm" onsubmit="handleSubmit(event)">
+    <input type="text" name="name" placeholder="Full Name" required autofocus><br>
+    <input type="email" name="email" placeholder="Email" required><br>
+    <input type="date" name="date" required><br>
+    <select name="eventType" id="eventType" onchange="savePreference()">
+      <option value="">Select Event</option>
+      <option value="music">Music</option>
+      <option value="tech">Tech</option>
+    </select><br>
+    <textarea name="message" placeholder="Message"></textarea><br>
+    <output id="confirmation"></output><br>
+    <button type="submit" onclick="showConfirmation()">Submit</button>
+    <button type="button" onclick="clearPreferences()">Clear Preferences</button>
+  </form>
+</section>
+
+<!-- Task 6: Event Handling -->
+<section>
+  <h2>Feedback</h2>
+  <input type="text" id="phone" placeholder="Phone" onblur="validatePhone()"><br>
+  <select id="feeSelect" onchange="displayFee()">
+    <option value="">Choose Event</option>
+    <option value="10">Music - $10</option>
+    <option value="15">Tech - $15</option>
+  </select><br>
+  <p id="fee"></p>
+  <img src="thumb.jpg" ondblclick="enlargeImage(this)" style="width:100px;"><br>
+  <textarea id="feedback" onkeydown="countChars()"></textarea>
+  <p>Characters: <span id="charCount">0</span></p>
+</section>
+
+<!-- Task 7: Video Invite -->
+<section>
+  <h2>Event Promo</h2>
+  <video id="promoVideo" controls oncanplay="videoReady()">
+    <source src="promo.mp4" type="video/mp4">
+  </video>
+  <p id="videoMsg"></p>
+</section>
+
+<!-- Task 8: Preferences -->
+<script>
+function savePreference() {
+  const eventType = document.getElementById("eventType").value;
+  localStorage.setItem("preferredEvent", eventType);
+}
+window.onload = () => {
+  const saved = localStorage.getItem("preferredEvent");
+  if (saved) document.getElementById("eventType").value = saved;
+};
+function clearPreferences() {
+  localStorage.clear();
+  sessionStorage.clear();
+  alert("Preferences cleared.");
+}
+</script>
+
+<!-- Task 9: Geolocation -->
+<section>
+  <h2>Find Nearby Events</h2>
+  <button onclick="findLocation()">Find Nearby Events</button>
+  <p id="location"></p>
+</section>
+<script>
+function findLocation() {
+  if (!navigator.geolocation) {
+    document.getElementById("location").innerText = "Geolocation not supported.";
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const { latitude, longitude } = pos.coords;
+      document.getElementById("location").innerText = `Lat: ${latitude}, Long: ${longitude}`;
+    },
+    (err) => {
+      document.getElementById("location").innerText = `Error: ${err.message}`;
+    },
+    { enableHighAccuracy: true, timeout: 5000 }
+  );
+}
+</script>
+
+<!-- Task 10: Debugging Tools (Comments Only) -->
+<!--
+Use Chrome DevTools to inspect elements, view Console logs, and place breakpoints.
+In VS Code, use breakpoints and live preview for step-by-step JS debugging.
+-->
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById("confirmation").innerText = "Form submitted successfully!";
+}
+function showConfirmation() {
+  alert("Registration submitted!");
+}
+function validatePhone() {
+  const phone = document.getElementById("phone").value;
+  if (!/^\d{10}$/.test(phone)) alert("Enter a valid 10-digit number.");
+}
+function displayFee() {
+  const fee = document.getElementById("feeSelect").value;
+  document.getElementById("fee").innerText = `Fee: $${fee}`;
+}
+function enlargeImage(img) {
+  img.style.width = "200px";
+}
+function countChars() {
+  const count = document.getElementById("feedback").value.length;
+  document.getElementById("charCount").innerText = count;
+}
+function videoReady() {
+  document.getElementById("videoMsg").innerText = "Video ready to play!";
+}
+window.onbeforeunload = function () {
+  return "Are you sure you want to leave this page?";
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+const eventName = "Community Yoga Session";
+const eventDate = "2025-07-10";
+let availableSeats = 25;
+console.log(`Event: ${eventName} | Date: ${eventDate} | Available Seats: ${availableSeats}`);
+availableSeats--;  
+console.log(`Seats left after registration: ${availableSeats}`);
+availableSeats--;
+console.log(`Seats left after second registration: ${availableSeats}`);
+availableSeats++; 
+console.log(`Seats after cancellation: ${availableSeats}`);

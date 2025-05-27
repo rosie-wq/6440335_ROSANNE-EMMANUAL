@@ -1,0 +1,41 @@
+const event = [
+    {
+        name: "Music Fest", date: "2025-07-20",seats: 5
+    },
+{
+        name: "Art Expo", date: "2024-07-21",seats: 1
+    },
+    {
+        name: "Tech talk", date: "2025-08-20",seats: 0
+    },
+];
+const today = new Date().toISOString().split("T")[0];
+console.log("Upcoming Available Events: ");
+EventSource,forEach(event => {
+    if(event.date > today && event.seats > 0)
+    {
+        console.log(' - ${event.name} on ${event.data} | Seats: ${event.seats}');
+
+    }else{
+        console.log('(Hidden: ${event.name} - Past or FUll)');
+    }
+});
+function register(event) {
+  try {
+    if (event.date <= today) {
+      throw new Error("Cannot register: Event is in the past.");
+    } else if (event.seats <= 0) {
+      throw new Error("Cannot register: No available seats.");
+    } else {
+      event.seats--;
+      console.log(`Successfully registered for ${event.name}. Seats left: ${event.seats}`);
+    }
+  } catch (error) {
+    console.error(`Registration failed for ${event.name}: ${error.message}`);
+  }
+}
+
+// Example registrations
+register(events[0]); 
+register(events[1]); 
+register(events[2]); 

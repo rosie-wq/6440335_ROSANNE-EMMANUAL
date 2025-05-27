@@ -1,0 +1,30 @@
+<body>
+  <h1>Event Registration</h1>
+
+  <form id="registrationForm">
+    <label>
+      Name:
+      <input type="text" name="username" required />
+    </label><br /><br />
+
+    <label>
+      Email:
+      <input type="email" name="email" required />
+    </label><br /><br />
+
+    <label>
+      Select Event:
+      <select name="eventName">
+        <option value="Yoga Session">Yoga Session</option>
+        <option value="Jazz Night">Jazz Night</option>
+        <option value="Dev Conference">Dev Conference</option>
+      </select>
+    </label><br /><br />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div id="formMessage"></div>
+
+  <script src="form handling.js"></script>
+</body>

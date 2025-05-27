@@ -1,0 +1,140 @@
+/* Reset Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Background */
+body {
+  background-color: #f2f2f2; /* fallback */
+  background-image: url('background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Header styles */
+#mainHeader {
+  background: linear-gradient(to right, #4CAF50, #81C784);
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Event Card Styling */
+.eventCard {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 12px;
+  border-radius: 8px;
+  background-color: white;
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Typography Styles */
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+p.description {
+  font-size: 1rem;
+  font-style: italic;
+  text-align: justify;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* Links and Navigation */
+nav a:link {
+  color: navy;
+  text-decoration: none;
+}
+
+nav a:hover {
+  color: orange;
+}
+
+nav a:active {
+  color: green;
+}
+
+nav a:visited {
+  color: purple;
+}
+
+/* List Styles */
+nav ul {
+  list-style-type: none;
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  padding: 10px;
+  margin: 5px 0;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Box Model Example */
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #4CAF50;
+}
+
+/* Column Layout */
+.news {
+  column-count: 2;
+  column-gap: 30px;
+  column-rule: 1px solid gray;
+}
+
+/* CTA Button */
+.cta-button {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  .eventCard {
+    width: 95%;
+    margin: 10px auto;
+  }
+}
